@@ -5,6 +5,8 @@ import requests
 
 from types_ import Film
 
+KINOPOISK_API_TOKEN = os.environ['KINOPOISK_API_TOKEN']
+
 API_VERSION = 'v2.1'
 KINOPOISK_UNOFFICIAL_API = 'https://kinopoiskapiunofficial.tech/api/' + API_VERSION + '/'
 
@@ -26,14 +28,14 @@ class Movie:
 
 
 def search_for_movie(query: str) -> list[Movie]:
-    headers = {"X-API-KEY": os.getenv('KINOPOISK_API_TOKEN')}
+    headers = {"X-API-KEY": KINOPOISK_API_TOKEN}
     request = requests.get(
         KINOPOISK_UNOFFICIAL_API + 'films/search-by-keyword',
         headers=headers,
         params={"keyword": query, "page": 1}
     )
     request_json = json.loads(request.text)
-    if request_json.get('error'):
+    if request.status_code != 200:
         raise Exception(request_json['error'])
     result = []
     for film in request_json['films']:
