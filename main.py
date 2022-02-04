@@ -36,7 +36,7 @@ def inlinequery(update: Update, _: CallbackContext) -> None:
     """Handle the inline query."""
     query = update.inline_query.query
     logger.info(query)
-    if query == "":
+    if query == '':
         return
     movies = search_for_movie(query)
     result = [
@@ -53,7 +53,7 @@ def inlinequery(update: Update, _: CallbackContext) -> None:
 def get_result_article_title(movie: Movie) -> str:
     title = ''
     if movie.ru_name:
-        title += f"«{movie.ru_name}» ({movie.name}, {movie.year})"
+        title += f'«{movie.ru_name}» ({movie.name}, {movie.year})'
     else:
         title += f'{movie.name}'
         if movie.year:
@@ -68,8 +68,8 @@ def main() -> None:
 
     dispatcher = updater.dispatcher
 
-    dispatcher.add_handler(CommandHandler("start", start))
-    dispatcher.add_handler(CommandHandler("help", help_command))
+    dispatcher.add_handler(CommandHandler('start', start))
+    dispatcher.add_handler(CommandHandler('help', help_command))
 
     dispatcher.add_handler(InlineQueryHandler(inlinequery))
 
