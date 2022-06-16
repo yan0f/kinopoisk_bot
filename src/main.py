@@ -2,11 +2,11 @@ import logging
 import os
 from uuid import uuid4
 
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 from telegram import InlineQueryResultArticle, InputTextMessageContent, Update
 from telegram.ext import CallbackContext, CommandHandler, InlineQueryHandler, Updater
 
-load_dotenv('./.env')
+load_dotenv(find_dotenv())
 
 from kinopoisk import Movie, search_for_movie
 
