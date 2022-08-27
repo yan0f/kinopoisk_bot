@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from telegram import InlineQueryResultArticle, InputTextMessageContent, Update
 from telegram.ext import CallbackContext, CommandHandler, InlineQueryHandler, Updater
 
-load_dotenv()
+load_dotenv('./.env')
 
 from kinopoisk import Movie, search_for_movie
 
