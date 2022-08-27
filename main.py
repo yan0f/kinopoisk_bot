@@ -6,12 +6,12 @@ from dotenv import load_dotenv
 from telegram import InlineQueryResultArticle, InputTextMessageContent, Update
 from telegram.ext import CallbackContext, CommandHandler, InlineQueryHandler, Updater
 
-from kinopoisk import Movie, search_for_movie
-
 load_dotenv()
 
-KINOPOISK_API_TOKEN = os.getenv('KINOPOISK_API_TOKEN')
-TELEGRAM_BOT_API_TOKEN = os.getenv('TELEGRAM_BOT_API_TOKEN')
+from kinopoisk import Movie, search_for_movie
+
+
+TELEGRAM_BOT_API_TOKEN = os.environ['TELEGRAM_BOT_API_TOKEN']
 
 
 logging.basicConfig(
@@ -45,7 +45,7 @@ def inlinequery(update: Update, _: CallbackContext) -> None:
             description=movie.description,
             title=get_result_article_title(movie),
             thumb_url=movie.poster_preview_url,
-            input_message_content=InputTextMessageContent(movie.kp_url)
+            input_message_content=InputTextMessageContent(movie.kp_url),
         ) for movie in movies]
     update.inline_query.answer(result)
 
