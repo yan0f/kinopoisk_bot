@@ -3,13 +3,14 @@ import os
 
 import requests
 
+from types_ import Film
 
 API_VERSION = 'v2.1'
 KINOPOISK_UNOFFICIAL_API = 'https://kinopoiskapiunofficial.tech/api/' + API_VERSION + '/'
 
 
 class Movie:
-    def __init__(self, data: dict):
+    def __init__(self, data: Film) -> None:
         self.kp_id = data['filmId']
         self.name = data.get('nameEn') or data.get('nameRu') or ''
         self.ru_name = data.get('nameRu', '')
