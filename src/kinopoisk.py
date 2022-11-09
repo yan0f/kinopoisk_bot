@@ -18,11 +18,9 @@ class Movie:
         self.ru_name = data.get('nameRu', '')
         self.year = data['year'].split('-')[0] if data['year'] != 'null' else None
         self.duration = data.get('filmLength', '')
-        self.genres = [genre['genre'] for genre in data['genres']]
         self.countries = [country['country'] for country in data['countries']]
         self.kp_rate = data['rating'] if data['rating'] != 'null' else None
         self.kp_url = f'https://www.kinopoisk.ru/film/{self.kp_id}/'
-        self.poster_url = data['posterUrl']
         self.poster_preview_url = data['posterUrlPreview']
         self.description = data.get('description', '')
 
