@@ -10,9 +10,7 @@ load_dotenv(find_dotenv())
 
 from kinopoisk import Movie, search_for_movie
 
-
 TELEGRAM_BOT_API_TOKEN = os.environ['TELEGRAM_BOT_API_TOKEN']
-
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
@@ -36,8 +34,6 @@ def inlinequery(update: Update, _: CallbackContext) -> None:
     """Handle the inline query."""
     query = update.inline_query.query
     logger.info(query)
-    if query == '':
-        return
     movies = search_for_movie(query)
     result = [
         InlineQueryResultArticle(

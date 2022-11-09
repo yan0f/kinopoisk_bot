@@ -8,7 +8,7 @@ from types_ import Film
 KINOPOISK_API_TOKEN = os.environ['KINOPOISK_API_TOKEN']
 
 API_VERSION = 'v2.1'
-KINOPOISK_UNOFFICIAL_API = f'https://kinopoiskapiunofficial.tech/api/{API_VERSION}/'
+KINOPOISK_UNOFFICIAL_API = f'https://kinopoiskapiunofficial.tech/api/{API_VERSION}'
 
 
 class Movie:
@@ -28,7 +28,7 @@ class Movie:
 def search_for_movie(query: str) -> list[Movie]:
     headers = {'X-API-KEY': KINOPOISK_API_TOKEN}
     request = requests.get(
-        KINOPOISK_UNOFFICIAL_API + 'films/search-by-keyword',
+        KINOPOISK_UNOFFICIAL_API + '/films/search-by-keyword',
         headers=headers,
         params={'keyword': query, 'page': 1}
     )
