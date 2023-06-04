@@ -33,7 +33,8 @@ def help_command(update: Update, _: CallbackContext) -> None:
 def inlinequery(update: Update, _: CallbackContext) -> None:
     """Handle the inline query."""
     query = update.inline_query.query
-    logger.info(query)
+    user = update.inline_query.from_user
+    logger.info(f'@{user.username}, {user.id=}, {query=}')
     movies = search_for_movie(query)
     result = [
         InlineQueryResultArticle(
