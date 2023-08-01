@@ -4,7 +4,7 @@ from uuid import uuid4
 
 from dotenv import load_dotenv, find_dotenv
 from telegram import InlineQueryResultArticle, InputTextMessageContent, Update
-from telegram.ext import CallbackContext, CommandHandler, InlineQueryHandler, Updater
+from telegram.ext import CallbackContext, CommandHandler, InlineQueryHandler, Application
 
 load_dotenv(find_dotenv())
 
@@ -19,32 +19,32 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def start(update: Update, _: CallbackContext) -> None:
+async def start(update: Update, _: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
-    update.message.reply_text('Этот бот помогает искать фильмы на Кинопоиске. '
-                              'Он работает в любом чате, просто напиши @kp_bobot в поле ввода.')
+    await update.message.reply_text('Этот бот помогает искать фильмы на Кинопоиске. '
+                                    'Он работает в любом чате, просто напиши @kp_bobot в поле ввода.')
 
 
-def help_command(update: Update, _: CallbackContext) -> None:
+async def help_command(update: Update, _: CallbackContext) -> None:
     """Send a message when the command /help is issued."""
-    update.message.reply_text('Help!')
+    await update.message.reply_text('Help!')
 
 
-def inlinequery(update: Update, _: CallbackContext) -> None:
+async def inlinequery(update: Update, _: CallbackContext) -> None:
     """Handle the inline query."""
     query = update.inline_query.query
     user = update.inline_query.from_user
     logger.info(f'@{user.username}, {user.id=}, {query=}')
-    movies = search_for_movie(query)
+    movies = await search_for_movie(query)
     result = [
         InlineQueryResultArticle(
             id=str(uuid4()),
             description=movie.description,
             title=get_result_article_title(movie),
-            thumb_url=movie.poster_preview_url,
+            thumbnail_url=movie.poster_preview_url,
             input_message_content=InputTextMessageContent(movie.kp_url),
         ) for movie in movies]
-    update.inline_query.answer(result)
+    await update.inline_query.answer(result)
 
 
 def get_result_article_title(movie: Movie) -> str:
@@ -61,18 +61,13 @@ def get_result_article_title(movie: Movie) -> str:
 
 
 def main() -> None:
-    updater = Updater(token=TELEGRAM_BOT_API_TOKEN)
+    application = Application.builder().token(TELEGRAM_BOT_API_TOKEN).build()
 
-    dispatcher = updater.dispatcher
+    application.add_handler(CommandHandler('start', start))
+    application.add_handler(CommandHandler('help', help_command))
+    application.add_handler(InlineQueryHandler(inlinequery))
 
-    dispatcher.add_handler(CommandHandler('start', start))
-    dispatcher.add_handler(CommandHandler('help', help_command))
-
-    dispatcher.add_handler(InlineQueryHandler(inlinequery))
-
-    updater.start_polling()
-
-    updater.idle()
+    application.run_polling(allowed_updates=Update.ALL_TYPES)
 
 
 if __name__ == '__main__':

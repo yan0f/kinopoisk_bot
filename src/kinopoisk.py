@@ -1,7 +1,6 @@
-import json
 import os
 
-import requests
+import httpx
 
 from types_ import Film
 
@@ -25,17 +24,18 @@ class Movie:
         self.description = data.get('description', '')
 
 
-def search_for_movie(query: str) -> list[Movie]:
+async def search_for_movie(query: str) -> list[Movie]:
     headers = {'X-API-KEY': KINOPOISK_API_TOKEN}
-    request = requests.get(
-        KINOPOISK_UNOFFICIAL_API + '/films/search-by-keyword',
-        headers=headers,
-        params={'keyword': query, 'page': 1}
-    )
-    request_json = json.loads(request.text)
-    if request.status_code != 200:
-        raise Exception(request_json['error'])
+    async with httpx.AsyncClient() as client:
+        response = await client.get(
+            KINOPOISK_UNOFFICIAL_API + '/films/search-by-keyword',
+            headers=headers,
+            params={'keyword': query, 'page': 1}
+        )
+    json = response.json()
+    if response.status_code != 200:
+        raise Exception(json['error'])
     result = []
-    for film_data in request_json['films']:
+    for film_data in json['films']:
         result.append(Movie(film_data))
     return result
