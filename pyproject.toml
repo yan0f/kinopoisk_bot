@@ -4,11 +4,11 @@ version = "0.1.0"
 description = ""
 authors = ["yan0f <31446439+yan0f@users.noreply.github.com>"]
 readme = "README.md"
-packages = [{include = "kinopoisk_bot"}]
+packages = [{ include = "kinopoisk_bot" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-python-telegram-bot = "^20.4"
+python-telegram-bot = "^20.5"
 python-dotenv = "^1.0.0"
 httpx = "^0.24.1"
 
