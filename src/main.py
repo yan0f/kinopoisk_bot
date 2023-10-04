@@ -4,7 +4,12 @@ from uuid import uuid4
 
 from dotenv import load_dotenv, find_dotenv
 from telegram import InlineQueryResultArticle, InputTextMessageContent, Update
-from telegram.ext import CallbackContext, CommandHandler, InlineQueryHandler, Application
+from telegram.ext import (
+    CallbackContext,
+    CommandHandler,
+    InlineQueryHandler,
+    Application,
+)
 
 load_dotenv(find_dotenv())
 
@@ -21,8 +26,10 @@ logger = logging.getLogger(__name__)
 
 async def start(update: Update, _: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
-    await update.message.reply_text('Этот бот помогает искать фильмы на Кинопоиске. '
-                                    'Он работает в любом чате, просто напиши @kp_bobot в поле ввода.')
+    await update.message.reply_text(
+        'Этот бот помогает искать фильмы на Кинопоиске. '
+        'Он работает в любом чате, просто напиши @kp_bobot в поле ввода.'
+    )
 
 
 async def help_command(update: Update, _: CallbackContext) -> None:
@@ -43,7 +50,9 @@ async def inlinequery(update: Update, _: CallbackContext) -> None:
             title=get_result_article_title(movie),
             thumbnail_url=movie.poster_preview_url,
             input_message_content=InputTextMessageContent(movie.kp_url),
-        ) for movie in movies]
+        )
+        for movie in movies
+    ]
     await update.inline_query.answer(result)
 
 

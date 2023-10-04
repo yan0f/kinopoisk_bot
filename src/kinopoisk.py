@@ -25,12 +25,11 @@ class Movie:
 
 
 async def search_for_movie(query: str) -> list[Movie]:
-    headers = {'X-API-KEY': KINOPOISK_API_TOKEN}
     async with httpx.AsyncClient() as client:
         response = await client.get(
             KINOPOISK_UNOFFICIAL_API + '/films/search-by-keyword',
-            headers=headers,
-            params={'keyword': query, 'page': 1}
+            headers={'X-API-KEY': KINOPOISK_API_TOKEN},
+            params={'keyword': query, 'page': 1},
         )
     json = response.json()
     if response.status_code != 200:
