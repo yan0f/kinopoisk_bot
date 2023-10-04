@@ -7,5 +7,4 @@ To use the bot, simply type @kp_bobot in any chat and start typing the name of t
 
 ## Installation
 1. Edit `.env` file.
-2. `docker build .`
-3. `docker compose up`
+2. `docker compose up`
