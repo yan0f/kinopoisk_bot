@@ -9,12 +9,11 @@ from telegram.ext import (
     Application,
 )
 
-from kinopoisk import Movie, search_for_movie
+from kinopoisk import search_for_movie
 from settings import settings
+from schema import Film
 
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
-)
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 logger = logging.getLogger(__name__)
 
@@ -43,7 +42,7 @@ async def inlinequery(update: Update, _: CallbackContext) -> None:
             id=str(uuid4()),
             description=movie.description,
             title=get_result_article_title(movie),
-            thumbnail_url=movie.poster_preview_url,
+            thumbnail_url=movie.poster_url_preview,
             input_message_content=InputTextMessageContent(movie.kp_url),
         )
         for movie in movies
@@ -51,12 +50,14 @@ async def inlinequery(update: Update, _: CallbackContext) -> None:
     await update.inline_query.answer(result)
 
 
-def get_result_article_title(movie: Movie) -> str:
+def get_result_article_title(movie: Film) -> str:
     title = ''
-    if movie.ru_name:
-        title += f'«{movie.ru_name}» ({movie.name}, {movie.year})'
+    if movie.name_ru and movie.name_en:
+        title += f'«{movie.name_ru}» ({movie.name_en}, {movie.year})'
+    elif movie.name_ru:
+        title += f'«{movie.name_ru}», {movie.year}'
     else:
-        title += f'{movie.name}'
+        title += f'{movie.name_en}'
         if movie.year:
             title += f', {movie.year}'
     if movie.kp_rate:
