@@ -1,13 +1,7 @@
-import os
-
 import httpx
 
+from settings import settings
 from types_ import Film
-
-KINOPOISK_API_TOKEN = os.environ['KINOPOISK_API_TOKEN']
-
-API_VERSION = 'v2.1'
-KINOPOISK_UNOFFICIAL_API = f'https://kinopoiskapiunofficial.tech/api/{API_VERSION}'
 
 
 class Movie:
@@ -27,8 +21,8 @@ class Movie:
 async def search_for_movie(query: str) -> list[Movie]:
     async with httpx.AsyncClient() as client:
         response = await client.get(
-            KINOPOISK_UNOFFICIAL_API + '/films/search-by-keyword',
-            headers={'X-API-KEY': KINOPOISK_API_TOKEN},
+            settings.KINOPOISK_UNOFFICIAL_API + '/films/search-by-keyword',
+            headers={'X-API-KEY': settings.KINOPOISK_API_TOKEN},
             params={'keyword': query, 'page': 1},
         )
     json = response.json()

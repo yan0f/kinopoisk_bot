@@ -1,8 +1,6 @@
 import logging
-import os
 from uuid import uuid4
 
-from dotenv import load_dotenv, find_dotenv
 from telegram import InlineQueryResultArticle, InputTextMessageContent, Update
 from telegram.ext import (
     CallbackContext,
@@ -11,11 +9,8 @@ from telegram.ext import (
     Application,
 )
 
-load_dotenv(find_dotenv())
-
 from kinopoisk import Movie, search_for_movie
-
-TELEGRAM_BOT_API_TOKEN = os.environ['TELEGRAM_BOT_API_TOKEN']
+from settings import settings
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
@@ -70,7 +65,7 @@ def get_result_article_title(movie: Movie) -> str:
 
 
 def main() -> None:
-    application = Application.builder().token(TELEGRAM_BOT_API_TOKEN).build()
+    application = Application.builder().token(settings.TELEGRAM_BOT_API_TOKEN).build()
 
     application.add_handler(CommandHandler('start', start))
     application.add_handler(CommandHandler('help', help_command))
