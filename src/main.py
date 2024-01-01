@@ -72,7 +72,7 @@ def main() -> None:
     application.add_handler(CommandHandler('help', help_command))
     application.add_handler(InlineQueryHandler(inlinequery))
 
-    application.run_polling(allowed_updates=Update.ALL_TYPES)
+    application.run_polling(allowed_updates=Update.INLINE_QUERY)
 
 
 if __name__ == '__main__':
