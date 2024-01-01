@@ -52,12 +52,12 @@ async def inlinequery(update: Update, _: CallbackContext) -> None:
 
 def get_result_article_title(movie: Film) -> str:
     title = ''
-    if movie.name_ru and movie.name_en:
+    if movie.name_ru and movie.name_en and movie.year:
         title += f'«{movie.name_ru}» ({movie.name_en}, {movie.year})'
     elif movie.name_ru:
         title += f'«{movie.name_ru}», {movie.year}'
     else:
-        title += f'{movie.name_en}'
+        title += f'{movie.name_en}, {movie.year}'
         if movie.year:
             title += f', {movie.year}'
     if movie.kp_rate:
