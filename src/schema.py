@@ -50,3 +50,18 @@ class Film(CamelModel):
     @classmethod
     def transform_kp_rate(cls, kp_rate: str) -> str | None:
         return kp_rate if kp_rate != 'null' else None
+
+    @property
+    def article_title(self) -> str:
+        title = ''
+        if self.name_ru and self.name_en and self.year:
+            title += f'«{self.name_ru}» ({self.name_en}, {self.year})'
+        elif self.name_ru:
+            title += f'«{self.name_ru}», {self.year}'
+        else:
+            title += f'{self.name_en}, {self.year}'
+            if self.year:
+                title += f', {self.year}'
+        if self.kp_rate:
+            title += f' • {self.kp_rate}'
+        return title

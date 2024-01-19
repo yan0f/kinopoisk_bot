@@ -11,7 +11,6 @@ from telegram.ext import (
 
 from kinopoisk import search_for_movie
 from settings import settings
-from schema import Film
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logging.getLogger('httpx').setLevel(logging.WARNING)
@@ -42,28 +41,13 @@ async def inlinequery(update: Update, _: CallbackContext) -> None:
         InlineQueryResultArticle(
             id=str(uuid4()),
             description=movie.description,
-            title=get_result_article_title(movie),
+            title=movie.article_title,
             thumbnail_url=movie.poster_url_preview,
             input_message_content=InputTextMessageContent(movie.kp_url),
         )
         for movie in movies
     ]
     await update.inline_query.answer(result)
-
-
-def get_result_article_title(movie: Film) -> str:
-    title = ''
-    if movie.name_ru and movie.name_en and movie.year:
-        title += f'«{movie.name_ru}» ({movie.name_en}, {movie.year})'
-    elif movie.name_ru:
-        title += f'«{movie.name_ru}», {movie.year}'
-    else:
-        title += f'{movie.name_en}, {movie.year}'
-        if movie.year:
-            title += f', {movie.year}'
-    if movie.kp_rate:
-        title += f' • {movie.kp_rate}'
-    return title
 
 
 def main() -> None:
