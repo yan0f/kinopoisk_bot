@@ -3,12 +3,13 @@ from pydantic import BaseModel, Field, field_validator, computed_field
 from pydantic import ConfigDict
 
 
-def to_camel_case(string: str) -> str:
-    string_split = string.split('_')
-    return string_split[0] + ''.join(word.capitalize() for word in string_split[1:])
-
-
 class CamelModel(BaseModel):
+
+    @staticmethod
+    def to_camel_case(string: str) -> str:
+        string_split = string.split('_')
+        return string_split[0] + ''.join(word.capitalize() for word in string_split[1:])
+
     model_config = ConfigDict(
         alias_generator=to_camel_case,
         populate_by_name=True,
