@@ -19,8 +19,8 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 
-[tool.ruff.format]
-quote-style = "single"
-
 [tool.ruff]
-line-length = 135
+line-length = 120
+lint.select = ["E", "F", "I", "B", "Q", "W", "N", "ASYNC", "S"]
+format.quote-style = "single"
+lint.flake8-quotes.inline-quotes = "single"
