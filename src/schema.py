@@ -1,6 +1,4 @@
-from pydantic import BaseModel, Field, field_validator, computed_field
-
-from pydantic import ConfigDict
+from pydantic import BaseModel, ConfigDict, Field, computed_field, field_validator
 
 
 class CamelModel(BaseModel):

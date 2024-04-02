@@ -26,11 +26,6 @@ async def start(update: Update, _: CallbackContext) -> None:
     )
 
 
-async def help_command(update: Update, _: CallbackContext) -> None:
-    """Send a message when the command /help is issued."""
-    await update.message.reply_text('Help!')
-
-
 async def inlinequery(update: Update, _: CallbackContext) -> None:
     """Handle the inline query."""
     query = update.inline_query.query
@@ -54,7 +49,6 @@ def main() -> None:
     application = Application.builder().token(settings.TELEGRAM_BOT_API_TOKEN).build()
 
     application.add_handler(CommandHandler('start', start))
-    application.add_handler(CommandHandler('help', help_command))
     application.add_handler(InlineQueryHandler(inlinequery))
 
     application.run_polling(allowed_updates=Update.INLINE_QUERY)
