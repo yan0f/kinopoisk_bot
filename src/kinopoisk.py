@@ -7,7 +7,7 @@ from settings import settings
 async def search_for_movie(query: str) -> list[Film]:
     async with httpx.AsyncClient() as client:
         response = await client.get(
-            settings.KINOPOISK_UNOFFICIAL_API + '/films/search-by-keyword',
+            f'{settings.KINOPOISK_UNOFFICIAL_API}/films/search-by-keyword',
             headers={'X-API-KEY': settings.KINOPOISK_API_TOKEN},
             params={'keyword': query, 'page': 1},
         )

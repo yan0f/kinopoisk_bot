@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     KINOPOISK_UNOFFICIAL_API: str = f'https://kinopoiskapiunofficial.tech/api/{API_VERSION}'
     KINOPOISK_API_TOKEN: str
     TELEGRAM_BOT_API_TOKEN: str
+    DEVELOPER_CHAT_ID: int
 
 
 settings = Settings()
