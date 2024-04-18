@@ -62,16 +62,13 @@ async def error_handler(update, context: ContextTypes.DEFAULT_TYPE) -> None:
     update_str = update.to_dict() if isinstance(update, Update) else str(update)
     message = (
         'An exception was raised while handling an update\n'
-        f'<pre>update = {html.escape(json.dumps(update_str, indent=2, ensure_ascii=False))}'
-        '</pre>\n\n'
+        f'<pre>update = {html.escape(json.dumps(update_str, indent=2, ensure_ascii=False))}</pre>\n\n'
         f'<pre>context.chat_data = {html.escape(str(context.chat_data))}</pre>\n\n'
         f'<pre>context.user_data = {html.escape(str(context.user_data))}</pre>\n\n'
         f'<pre>{html.escape(tb_string)}</pre>'
     )
 
-    await context.bot.send_message(
-        chat_id=settings.DEVELOPER_CHAT_ID, text=message, parse_mode=ParseMode.HTML
-    )
+    await context.bot.send_message(chat_id=settings.DEVELOPER_CHAT_ID, text=message, parse_mode=ParseMode.HTML)
 
 
 def main() -> None:

@@ -2,7 +2,6 @@ from pydantic import BaseModel, ConfigDict, Field, computed_field, field_validat
 
 
 class CamelModel(BaseModel):
-
     @staticmethod
     def to_camel_case(string: str) -> str:
         string_split = string.split('_')
