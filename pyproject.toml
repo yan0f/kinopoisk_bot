@@ -8,7 +8,7 @@ packages = [{ include = "kinopoisk_bot" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-python-telegram-bot = "^21.1.1"
+python-telegram-bot = "^21.2"
 httpx = "^0.27.0"
 pydantic = "^2.7.0"
 pydantic-settings = "^2.2.1"
