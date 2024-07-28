@@ -4,7 +4,16 @@ import logging
 import traceback
 from uuid import uuid4
 
-from telegram import InlineQueryResultArticle, InputTextMessageContent, Update
+from kinopoisk import search_for_movie
+from settings import settings
+from telegram import (
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    InlineQueryResultArticle,
+    InputTextMessageContent,
+    SwitchInlineQueryChosenChat,
+    Update,
+)
 from telegram.constants import ParseMode
 from telegram.ext import (
     Application,
@@ -12,9 +21,6 @@ from telegram.ext import (
     ContextTypes,
     InlineQueryHandler,
 )
-
-from kinopoisk import search_for_movie
-from settings import settings
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logging.getLogger('httpx').setLevel(logging.WARNING)
@@ -24,9 +30,24 @@ logger = logging.getLogger(__name__)
 
 async def start(update: Update, _: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /start is issued."""
+    keyboard = [
+        [
+            InlineKeyboardButton(
+                'Попробовать',
+                switch_inline_query_chosen_chat=SwitchInlineQueryChosenChat(allow_bot_chats=True,
+                                                                            allow_group_chats=True,
+                                                                            allow_user_chats=True,
+                                                                            allow_channel_chats=True)
+            )
+        ]
+
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
     await update.message.reply_text(
         'Этот бот помогает искать фильмы на Кинопоиске. '
-        'Он работает в любом чате, просто напиши @kp_bobot в поле ввода.'
+        'Он работает в любом чате, просто напиши @kp_bobot в поле ввода.',
+        reply_markup=reply_markup,
     )
 
 
