@@ -1,26 +1,12 @@
-[tool.poetry]
+[project]
 name = "kinopoisk-bot"
 version = "0.1.0"
 description = ""
-authors = ["yan0f <31446439+yan0f@users.noreply.github.com>"]
 readme = "README.md"
-packages = [{ include = "kinopoisk_bot" }]
-
-[tool.poetry.dependencies]
-python = "^3.11"
-python-telegram-bot = "^21.7"
-httpx = "^0.27.2"
-pydantic = "^2.10.1"
-pydantic-settings = "^2.6.1"
-
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
-
-
-[tool.ruff]
-line-length = 120
-lint.select = ["E", "F", "I", "B", "Q", "W", "N", "ASYNC", "S"]
-format.quote-style = "single"
-lint.flake8-quotes.inline-quotes = "single"
+requires-python = ">=3.11"
+dependencies = [
+    "httpx>=0.28.1",
+    "pydantic-settings>=2.7.0",
+    "pydantic>=2.10.4",
+    "python-telegram-bot>=21.9",
+]
