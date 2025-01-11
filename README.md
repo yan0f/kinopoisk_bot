@@ -3,7 +3,7 @@ This project allows users to search for links to movies and send them via an inl
 
 
 ## Usage:
-To use the bot, simply type @kp_bobot in any chat and start typing the name of the movie you are looking for. The bot will show a list of movie links that match your query.
+To use the bot, simply type `@kp_bobot` in any chat and start typing the name of the movie you are looking for. The bot will show a list of movie links that match your query.
 
 ## Installation
 1. Edit `.env` file.
