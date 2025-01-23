@@ -34,13 +34,14 @@ async def start(update: Update, _: ContextTypes.DEFAULT_TYPE) -> None:
         [
             InlineKeyboardButton(
                 'Попробовать',
-                switch_inline_query_chosen_chat=SwitchInlineQueryChosenChat(allow_bot_chats=True,
-                                                                            allow_group_chats=True,
-                                                                            allow_user_chats=True,
-                                                                            allow_channel_chats=True)
+                switch_inline_query_chosen_chat=SwitchInlineQueryChosenChat(
+                    allow_bot_chats=True,
+                    allow_group_chats=True,
+                    allow_user_chats=True,
+                    allow_channel_chats=True,
+                ),
             )
         ]
-
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
