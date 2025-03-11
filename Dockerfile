@@ -1,17 +1,15 @@
-FROM python:3.12-slim
+FROM python:3.13
 
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certificates
 
-ARG POETRY_VERSION=1.8.3
+ADD https://astral.sh/uv/install.sh /uv-installer.sh
 
-WORKDIR /code/
+RUN sh /uv-installer.sh && rm /uv-installer.sh
 
-RUN pip install --upgrade pip && pip install --no-cache-dir "poetry==$POETRY_VERSION"
+ENV PATH="/root/.local/bin/:$PATH"
 
-COPY ["pyproject.toml", "poetry.lock", "./"]
+ADD . /app
 
-RUN poetry config virtualenvs.create false \
-    && poetry install --no-root --no-ansi --no-interaction
+WORKDIR /app
 
-COPY ./src/ /code/
+RUN uv sync --frozen
