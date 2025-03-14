@@ -99,9 +99,9 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "httpx", specifier = ">=0.28.1" },
-    { name = "pydantic", specifier = ">=2.10.4" },
-    { name = "pydantic-settings", specifier = ">=2.7.0" },
-    { name = "python-telegram-bot", specifier = ">=21.9" },
+    { name = "pydantic", specifier = ">=2.10.6" },
+    { name = "pydantic-settings", specifier = ">=2.8.1" },
+    { name = "python-telegram-bot", specifier = ">=21.11.1" },
 ]
 
 [package.metadata.requires-dev]
