@@ -55,6 +55,9 @@ async def start(update: Update, _: ContextTypes.DEFAULT_TYPE) -> None:
 async def inlinequery(update: Update, _: ContextTypes.DEFAULT_TYPE) -> None:
     """Handle the inline query."""
     query = update.inline_query.query
+    if not query:  # empty query should not be handled
+        return
+
     user = update.inline_query.from_user
     logger.info(f'@{user.username}, {user.id=}, {query=}')
     movies = await search_for_movie(query)
